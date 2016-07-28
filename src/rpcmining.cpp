@@ -119,7 +119,7 @@ Value getgenerate(const Array& params, bool fHelp)
         throw runtime_error(
             "getgenerate\n"
             "\nReturn if the server is set to generate coins or not. The default is false.\n"
-            "It is set with the command line argument -gen (or bitcoin.conf setting gen)\n"
+            "It is set with the command line argument -gen (or crowncoin.conf setting gen)\n"
             "It can also be set with the setgenerate call.\n"
             "\nResult\n"
             "true|false      (boolean) If the server is set to generate coins or not\n"
@@ -299,10 +299,10 @@ Value getwork(const Array& params, bool fHelp)
         );
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Bitcoin is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Crowncoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Bitcoin is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Crowncoin is downloading blocks...");
 
     typedef map<uint256, pair<CBlock*, CScript> > mapNewBlock_t;
     static mapNewBlock_t mapNewBlock;    // FIXME: thread safety
@@ -481,10 +481,10 @@ Value getblocktemplate(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid mode");
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Bitcoin is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Crowncoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Bitcoin is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Crowncoin is downloading blocks...");
 
     // Update block
     static unsigned int nTransactionsUpdatedLast;
@@ -651,7 +651,7 @@ Value getauxblock(const Array& params, bool fHelp)
             "  \"coinbasevalue\"      (numeric) value of the block's coinbase\n"
             "  \"bits\"               (string) compressed target of the block\n"
             "  \"height\"             (numeric) height of the block\n"
-            "  \"_target\"            (string) target in reversed byte order, deprecated\n"
+            "  \"target\"            (string) target in reversed byte order, deprecated\n"
             "}\n"
             "\nResult (with arguments):\n"
             "xxxxx        (boolean) whether the submitted block was correct\n"
@@ -667,9 +667,9 @@ Value getauxblock(const Array& params, bool fHelp)
 
     const bool regtest = (Params().NetworkID() == CChainParams::REGTEST);
     if (vNodes.empty() && !regtest)
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Bitcoin is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Crowncoin is not connected!");
     if (IsInitialBlockDownload() && !regtest)
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Bitcoin is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Crowncoin is downloading blocks...");
 
     {
         LOCK(cs_main);
@@ -746,7 +746,7 @@ Value getauxblock(const Array& params, bool fHelp)
         result.push_back(Pair("coinbasevalue", (int64_t)block.vtx[0].vout[0].nValue));
         result.push_back(Pair("bits", strprintf("%08x", block.nBits)));
         result.push_back(Pair("height", static_cast<int64_t> (pindexPrev->nHeight + 1)));
-        result.push_back(Pair("_target", HexStr(BEGIN(target), END(target))));
+        result.push_back(Pair("target", HexStr(BEGIN(target), END(target))));
 
         return result;
     }
