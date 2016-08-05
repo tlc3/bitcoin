@@ -343,6 +343,7 @@ Value throne(const Array& params, bool fHelp)
         }
 
     	bool found = false;
+        bool found2 = false;
 
 		Object statusObj;
 		statusObj.push_back(Pair("alias", alias));
@@ -351,7 +352,20 @@ Value throne(const Array& params, bool fHelp)
     		if(mne.getAlias() == alias) {
     			found = true;
     			std::string errorMessage;
-    			bool result = activeThrone.Register(mne.getIp(), mne.getPrivKey(), mne.getTxHash(), mne.getOutputIndex(), errorMessage);
+                std::vector<CThrone> vThrones = mnodeman.GetFullThroneVector();
+                BOOST_FOREACH(CThrone& mn, vThrones) {
+                    std::string strAddr = mn.addr.ToString();
+                    if (strAddr == mne.getIp().ToString()){
+                        found2 = true;
+                        found = false;
+                    }
+                }
+                bool result;
+                if (!found2){
+    			    result = activeThrone.Register(mne.getIp(), mne.getPrivKey(), mne.getTxHash(), mne.getOutputIndex(), errorMessage);
+                } else {
+                    errorMessage = "Throne has already been started and your IP added to the list.";
+                }
 
     			statusObj.push_back(Pair("result", result ? "successful" : "failed"));
     			if(!result) {
@@ -361,7 +375,7 @@ Value throne(const Array& params, bool fHelp)
     		}
     	}
 
-    	if(!found) {
+    	if(!found && !found2) {
     		statusObj.push_back(Pair("result", "failed"));
     		statusObj.push_back(Pair("errorMessage", "could not find alias in config. Verify with list-conf."));
     	}
@@ -395,6 +409,7 @@ Value throne(const Array& params, bool fHelp)
 		int total = 0;
 		int successful = 0;
 		int fail = 0;
+        bool found = false;
 
 		Object resultsObj;
 
@@ -402,15 +417,30 @@ Value throne(const Array& params, bool fHelp)
 			total++;
 
 			std::string errorMessage;
-			bool result = activeThrone.Register(mne.getIp(), mne.getPrivKey(), mne.getTxHash(), mne.getOutputIndex(), errorMessage);
+            bool result;
+            BOOST_FOREACH(CThrone& mn, vThrones) {
+                std::string strAddr = mn.addr.ToString();
+                if (strAddr == mne.getIp().ToString()){
+                    found = true;
+                }
+                if (!found){
+                    result = activeThrone.Register(mne.getIp(), mne.getPrivKey(), mne.getTxHash(), mne.getOutputIndex(), errorMessage);
+                } else {
+                    errorMessage = "Throne has already been started and your IP added to the list.";
+                    result = false;
+                }
+            }
 
 			Object statusObj;
 			statusObj.push_back(Pair("alias", mne.getAlias()));
             statusObj.push_back(Pair("result", result ? "successful" : "failed"));
 
-			if(result) {
+			if (result && !found) {
 				successful++;
-			} else {
+			} else if (!result && found){
+                fail++;
+                statusObj.push_back(Pair("errorMessage", errorMessage));
+            } else {
 				fail++;
 				statusObj.push_back(Pair("errorMessage", errorMessage));
 			}
