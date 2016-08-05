@@ -348,12 +348,12 @@ Value throne(const Array& params, bool fHelp)
 
         Object statusObj;
         statusObj.push_back(Pair("alias", alias));
+        std::vector<CThrone> vThrones = mnodeman.GetFullThroneVector();
 
         BOOST_FOREACH(CThroneConfig::CThroneEntry mne, throneConfig.getEntries()) {
             if(mne.getAlias() == alias) {
                 found = true;
                 std::string errorMessage;
-                std::vector<CThrone> vThrones = mnodeman.GetFullThroneVector();
                 BOOST_FOREACH(CThrone& mn, vThrones) {
                     std::string strAddr = mn.addr.ToString();
                     if (strAddr == mne.getIp().ToString()){
@@ -413,13 +413,13 @@ Value throne(const Array& params, bool fHelp)
         bool found = false;
 
         Object resultsObj;
+        std::vector<CThrone> vThrones = mnodeman.GetFullThroneVector();
 
         BOOST_FOREACH(CThroneConfig::CThroneEntry mne, throneConfig.getEntries()) {
             total++;
 
             std::string errorMessage;
             bool result;
-            std::vector<CThrone> vThrones = mnodeman.GetFullThroneVector();
             BOOST_FOREACH(CThrone& mn, vThrones) {
                 std::string strAddr = mn.addr.ToString();
                 if (strAddr == mne.getIp().ToString()){
