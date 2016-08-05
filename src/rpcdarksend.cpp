@@ -419,6 +419,7 @@ Value throne(const Array& params, bool fHelp)
 
             std::string errorMessage;
             bool result;
+            std::vector<CThrone> vThrones = mnodeman.GetFullThroneVector();
             BOOST_FOREACH(CThrone& mn, vThrones) {
                 std::string strAddr = mn.addr.ToString();
                 if (strAddr == mne.getIp().ToString()){
