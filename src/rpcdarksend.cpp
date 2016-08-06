@@ -356,7 +356,7 @@ Value throne(const Array& params, bool fHelp)
                 std::string errorMessage;
                 BOOST_FOREACH(CThrone& mn, vThrones) {
                     std::string strAddr = mn.addr.ToString();
-                    if (strAddr == mne.getIp().ToString()){
+                    if (strAddr == mne.getIp()){
                         found2 = true;
                         found = false;
                     }
@@ -422,7 +422,7 @@ Value throne(const Array& params, bool fHelp)
             bool result;
             BOOST_FOREACH(CThrone& mn, vThrones) {
                 std::string strAddr = mn.addr.ToString();
-                if (strAddr == mne.getIp().ToString()){
+                if (strAddr == mne.getIp()){
                     found = true;
                 }
                 if (!found){
