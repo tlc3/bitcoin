@@ -31,7 +31,7 @@ information or see http://opensource.org/licenses/MIT.
 
 Development Process
 -------------------
-
+ 
 The `master` branch is meant to be stable. Development is normally done in separate branches.
 [Tags](https://github.com/dashpay/dash/tags) are created to indicate new official,
 stable release versions of Dash Core.
