@@ -1,9 +1,9 @@
 Crown Core staging tree 0.12
 ===============================
 
-`master:` [![Build Status](https://travis-ci.org/dashpay/dash.svg?branch=master)](https://travis-ci.org/dashpay/dash) `v0.12.0.x:` [![Build Status](https://travis-ci.org/dashpay/dash.svg?branch=v0.12.0.x)](https://travis-ci.org/dashpay/dash/branches) `v0.12.1.x:` [![Build Status](https://travis-ci.org/dashpay/dash.svg?branch=v0.12.1.x)](https://travis-ci.org/dashpay/dash/branches)
+`master:` [![Build Status](https://travis-ci.org/Crowndev/crowncoin.svg?branch=master)](https://travis-ci.org/Crowndev/crowncoin)
 
-https://www.dash.org
+https://www.crowncoin.org
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
 
@@ -20,7 +20,7 @@ are carried out collectively by the network. Crown Core is the name of open
 source software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Crown Core software, see https://www.dash.org/downloads.
+the Crown Core software, see https://www.crowncoin.org/downloads.
 
 
 License
@@ -36,7 +36,7 @@ The `master` branch is meant to be stable. Development is normally done in separ
 [Tags](https://github.com/dashpay/dash/tags) are created to indicate new official,
 stable release versions of Crown Core.
 
-The contribution workflow is described in [CONTRIBUTING.md](https://github.com/dashpay/dash/blob/v0.12.1.x/CONTRIBUTING.md).
+The contribution workflow is described in [CONTRIBUTING.md](https://github.com/Crowndev/crowncoin/blob/v0.12.1.x/CONTRIBUTING.md).
 
 
 Testing
